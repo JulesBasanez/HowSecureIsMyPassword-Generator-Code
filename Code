@@ -1,0 +1,111 @@
+    <meta charset="utf-8">
+
+    <title>How Secure Is My Password?</title>
+
+    <meta description="Find out how long it would take a computer to crack your password">
+    <meta author="Small Hadron Collider">
+
+    <link rel="stylesheet" href="/assets/css/screen.css">
+
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  </head>
+
+  <body class="default container">
+
+    <noscript id="no-js">
+        <p class="sorry">For security reasons this site requires JavaScript.</p>
+        <p class="sorry">Sorry!</p>
+    </noscript>
+
+    <div id="js">
+      <h1 role="banner">
+        <a href="/">{{lang.main_title}}</a>
+      </h1>
+
+
+      <div role="main">
+        <div class="input">
+            <input type="password" id="password" ng-model="password" ng-change="passwordChange()" placeholder="Enter Password" class="password" autofocus>
+        </div>
+
+        <div class="phishing" ng-hide="password">
+            <p>This site could be stealing your password... it's not, but it easily <em>could</em> be.<br />Be careful where you type your password.</p>
+        </div>
+
+        <div ng-show="password">
+            <ul ng-show="display.config">
+                <li>
+                    <label><input type="checkbox" ng-model="config.namedNumbers" ng-change="config.changeNamedNumbers()" />Use Named Numbers</label>
+                </li>
+                <li>
+                    <label>Calculations per second</label>
+                    <input type="text" ng-model="config.calculations" ng-change="config.changeCalculations()" />
+                </li>
+            </ul>
+
+            <div class="results">
+                <span class="toggle" ng-click="display.toggleConfig()">{{display.configText}}</span>
+
+
+                <p ng-hide="insecure">It would take <span ng-show="config.calculationsOriginal">a desktop PC</span> about <span class="main">{{time}}</span> to crack your password</p>
+                <a class="tweet-me" ng-hide="insecure" href="http://twitter.com/home/?status=It would take a desktop PC about {{time}} to crack my password!%0d%0dhttp://hsim.pw">[Tweet Result]</a>
+
+                <p ng-show="insecure">Your password would be cracked almost <span class="main">Instantly</span></p>
+                <a class="tweet-me" ng-show="insecure" href="http://twitter.com/home/?status=My password would be cracked almost instantly!%0d%0dhttp://hsim.pw">[Tweet Result]</a>
+
+                <span class="toggle" ng-click="display.toggleDetails()">{{display.detailsText}}</span>
+            </div>
+
+            <ul ng-show="display.details">
+                <li><strong>Length:</strong> {{length}} characters</li>
+                <li><strong>Character Combinations:</strong> {{characters}}</li>
+                <li><strong>Calculations Per Second:</strong> {{calcsPerSecond}}</li>
+                <li><strong>Possible Combinations:</strong> {{possibleCombinations}}</li>
+            </ul>
+
+            <ul ng-show="checks">
+                <li ng-repeat="check in checks" class="{{check.type}}">
+                    <h2 ng-bind-html-unsafe="check.title"></h2>
+                    <p ng-bind-html-unsafe="check.wording"></p>
+                </li>
+            </ul>
+        </div>
+
+      </div>
+
+      <div class="social">
+        <div class="twitter">
+          <a href="https://twitter.com/hsimpnet" class="twitter-follow-button" data-show-count="false" data-size="large" data-dnt="true">Follow @hsimpnet</a>
+        </div>
+
+        <div class="facebook">
+          <div class="fb-like" data-href="https://www.facebook.com/howsecureismypassword" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+        </div>
+      </div>
+
+      <div role="contentinfo">
+        <p class="version">
+          {{lang.version}} 4.0
+          <!-- <a href="#">View Release Notes</a> -->
+        </p>
+        <p class="sponsored">Sponsored by<br /> <a href="http://www.roboform.com/password-manager">RoboForm Password Manager</a></p>
+
+        <div class="attr">
+          <ul>
+            <li>{{lang.top10k}} <a href="http://xato.net/passwords/more-top-worst-passwords">Xato</a></li>
+            <li>Typefaces by <a href="http://www.theleagueofmoveabletype.com/fonts/7-league-gothic">The League of Movable Type</a> &amp; <a href="http://www.google.com/webfonts/specimen/Lato">Łukasz Dziedzic</a></li>
+          </ul>
+          <p class="copyright">&copy; Small Hadron Collider, 2009-2014</p>
+        </div>
+
+        <p class="disclaimer">This site is for educational use. Due to limitations of the technology involved, its results <em>cannot</em> always be accurate. Your password will not be transferred over the internet.</p>
+      </div>
+    </div>
+
+    <script>
+        var HSIMP = {
+            language: {}
+        };
